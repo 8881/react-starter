@@ -1,8 +1,7 @@
 {
   "name": "react-starter",
   "version": "0.1.0",
-  "description": "",
-  "main": "index.js",
+  "description": "A simple framework built by react via react,react-dom,react-redux,react-router-dom.",
   "scripts": {
     "start": "webpack-dev-server",
     "build": "rm -rf dist &&  NODE_ENV=production webpack -p"
