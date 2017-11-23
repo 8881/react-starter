@@ -11,6 +11,7 @@ import routes from './routes';
 import config from './config';
 import configure from './store/configureStore';
 import 'normalize.css';
+import './global.css';
 
 // import ErrorBoundary from './components/ErrorBoundary';
 
