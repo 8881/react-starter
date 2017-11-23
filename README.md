@@ -18,5 +18,5 @@ http://localhost:9000
 ```
 
 ## Issue
-If you have any questions, just open a issue.
+If you have any questions, just open an issue.
 
