@@ -10,11 +10,13 @@ const PostCssNext = require('postcss-cssnext');
 const PostCssImport = require('postcss-import');
 const precss = require('precss');
 
+const PORT = 9000;
+
 const config = {
   entry: {
     client: './src/client.js',
     vendor: [
-      'react', 'react-router', 'react-dom','react-redux',
+      'react', 'react-router', 'react-dom', 'react-redux',
     ],
   },
   output: {
@@ -81,12 +83,15 @@ const config = {
     compress: true,
     historyApiFallback: true,
     host: "0.0.0.0",
-    port: 9000,
+    port: PORT,
     hot: false,
     disableHostCheck: true,
     noInfo: false,
     open: false,
     openPage: 'index.html',
+    proxy: {
+      '**': `http://localhost:${PORT + 1}`,
+    },
   },
   cache: false,
   plugins: [
@@ -108,6 +113,10 @@ const config = {
 // TODO  dllplugin
 if (process.env.NODE_ENV === 'production') {
   config.plugins.push(
+    new webpack.LoaderOptionsPlugin({
+      minimize: true,
+      debug: false,
+    }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production'),
     }),
