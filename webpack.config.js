@@ -10,7 +10,7 @@ const PostCssNext = require('postcss-cssnext');
 const PostCssImport = require('postcss-import');
 const precss = require('precss');
 
-const PORT = 9000;
+const PORT = 9090;
 
 const config = {
   entry: {
@@ -89,9 +89,9 @@ const config = {
     noInfo: false,
     open: false,
     openPage: 'index.html',
-    proxy: {
-      '**': `http://localhost:${PORT + 1}`,
-    },
+    // proxy: {
+    //   '**': `http://localhost:${PORT + 1}`,
+    // },
   },
   cache: false,
   plugins: [
