@@ -1,5 +1,4 @@
 import React from 'react';
-import style from './style.css';
 
 export default class extends React.Component {
   static propTypes = {};
@@ -12,7 +11,7 @@ export default class extends React.Component {
 
   render() {
     return (
-      <div className={style.default}>hello world.</div>
+      <div>hello world1.</div>
     );
   }
 }

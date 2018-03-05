@@ -7,7 +7,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import routes from './routes';
+import Routes from './routes';
 import config from './config';
 import configure from './store/configureStore';
 import 'normalize.css';
@@ -19,7 +19,9 @@ const store = configure({ config, });
 
 ReactDOM.render(
   <Provider store={store}>
-    <BrowserRouter>{routes}</BrowserRouter>
+    <BrowserRouter>
+      <Routes/>
+    </BrowserRouter>
   </Provider>,
   document.getElementById('root')
 );

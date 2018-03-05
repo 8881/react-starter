@@ -89,9 +89,9 @@ const config = {
     noInfo: false,
     open: false,
     openPage: 'index.html',
-    // proxy: {
-    //   '**': `http://localhost:${PORT + 1}`,
-    // },
+    proxy: {
+      '**': `http://localhost:${PORT + 1}`,
+    },
   },
   cache: false,
   plugins: [
