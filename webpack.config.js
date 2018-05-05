@@ -10,8 +10,6 @@ const PostCssNext = require('postcss-cssnext');
 const PostCssImport = require('postcss-import');
 const precss = require('precss');
 
-const PORT = 9090;
-
 const config = {
   entry: {
     client: './src/client.js',
@@ -26,8 +24,7 @@ const config = {
     crossOriginLoading: "anonymous",
   },
   module: {
-    rules: [
-      {
+    rules: [{
         test: /\.js$/,
         loader: 'babel-loader',
         exclude: /node_modules/,
@@ -36,8 +33,7 @@ const config = {
         test: /\.[p]?css$/,
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
-          use: [
-            {
+          use: [{
               loader: 'css-loader',
               options: {
                 minimize: process.env.NODE_ENV === 'production',
@@ -78,21 +74,6 @@ const config = {
   },
   target: 'web',
   stats: 'errors-only',
-  devServer: {
-    contentBase: path.join(__dirname, 'dist'),
-    compress: true,
-    historyApiFallback: true,
-    host: "0.0.0.0",
-    port: PORT,
-    hot: false,
-    disableHostCheck: true,
-    noInfo: false,
-    open: false,
-    openPage: 'index.html',
-    proxy: {
-      '**': `http://localhost:${PORT + 1}`,
-    },
-  },
   cache: false,
   plugins: [
     // new webpack.HotModuleReplacementPlugin(),
@@ -122,19 +103,8 @@ if (process.env.NODE_ENV === 'production') {
     }),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
-        properties: false,
         warnings: false,
-        drop_console: false,
       },
-      output: {
-        beautify: true,
-        quote_keys: true,
-      },
-      sourceMap: false,
-      mangle: {
-        screw_ie8: false,
-        except: ['e']
-      }
     })
   );
 }

@@ -3,8 +3,7 @@
   "version": "0.1.0",
   "description": "A simple framework built by react via react,react-dom,react-redux,react-router-dom.",
   "scripts": {
-    "start": "webpack-dev-server",
-    "server": "nodemon app.js",
+    "start": "node app.js",
     "build": "rm -rf dist &&  NODE_ENV=production webpack -p",
     "lib": "rm -rf lib && npx babel src --out-dir lib --copy-files && npx babel src --out-dir lib"
   },
@@ -40,7 +39,6 @@
     "koa-body": "^2.5.0",
     "koa-jwt": "^3.3.0",
     "koa-router": "^7.3.0",
-    "lerna": "^2.5.1",
     "mysql2": "^1.5.1",
     "normalize.css": "^7.0.0",
     "postcss-cssnext": "^3.0.2",
@@ -55,10 +53,12 @@
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
     "style-loader": "^0.18.2",
-    "webpack": "^3.8.1",
-    "webpack-dev-server": "^2.9.4"
+    "webpack": "^3.11.0",
+    "webpack-dev-server": "^2.11.2"
   },
   "dependencies": {
-    "koa-favicon": "^2.0.0"
+    "chokidar": "^2.0.3",
+    "koa-favicon": "^2.0.0",
+    "pingme": "^1.0.1"
   }
 }

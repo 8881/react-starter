@@ -20,8 +20,8 @@ const view = (ctx, next) => {
     return false;
   }
 
-  const html = `
-<!doctype html>
+  const html = 
+`<!doctype html>
   <html lang="zh-hans">
     <head>
       <meta charset="utf-8" />
@@ -32,14 +32,13 @@ const view = (ctx, next) => {
       <style></style>
     </head>
     <body>
-      <div id="${`哈哈哈`}">${markup}</div>
+      <div id="${`哈哈哈`}">${markup}1233</div>
       <script>window.initialState = '';</script>
     </body>
-  </html>
-`;
+</html>`;
 
-  ctx.body = html.replace(/\s{2,}/img, '');
+  // ctx.body = html.replace(/\s{2,}/img, '');
+  ctx.body = html.trim();
 };
-
 
 module.exports = view;

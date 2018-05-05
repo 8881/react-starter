@@ -4,21 +4,71 @@ if (process.env.NODE_ENV === undefined) {
   process.env.NODE_ENV = 'development';
 }
 
-const Koa = require('koa');
-const kcors = require('kcors');
-const KoaBody = require('koa-body');
-const favicon = require('koa-favicon');
-const router = require('./router');
+const path = require('path');
+const pingme = require('pingme');
+const webpack = require('webpack');
+const WebpackDevServer = require('webpack-dev-server');
+const chokidar = require('chokidar');
 
-const app = new Koa();
+const app = require('./server');
+const webpackConfig = require('../webpack.config');
+const compiler = webpack(webpackConfig);
+const PORT = process.env.PORT || 9090;
 
-const PORT = process.env.PORT || 9091;
+if (process.env.NODE_ENV === 'development') {
+  const devServer = new WebpackDevServer(compiler, {
+    historyApiFallback: true,
+    disableHostCheck: true,
+    stats: {
+      colors: true
+    },
+    proxy: {
+      '**': `http://localhost:${PORT + 1}`,
+    },
+  });
 
-app.use(KoaBody());
-app.use(kcors());
-app.use(favicon(__dirname + '/lib/images/favicon.ico'));
-app.use(router.routes());
+  // webpack-dev-middleware
+  devServer.middleware.waitUntilValid(() => {
 
-app.listen(PORT, () => {
-  console.log(`http://localhost:${PORT}`);
-});
+    // hot reload
+    const watcher = chokidar.watch(__dirname, {
+      ignored: /(^|[\/\\])\../,
+      persistent: true
+    });
+    watcher.on('ready', () => {
+      console.log('>>>>>>>>>>>>>>', 'watcher ready');
+
+      // start the koa server
+      app.listen(PORT + 1, () => {
+        console.log('>>>>>>> ', `http://localhost:${PORT+1}`);
+      });
+
+      const entryFilePath = path.join(__dirname, 'server.js');
+      const serverFile = Object.keys(require.cache).filter((id) => /[\/\\]server[\/\\]/.test(id));
+      watcher.on('all', (event, path) => {
+        serverFile.forEach(id => {
+          if (path === id) {
+            delete require.cache[id];
+            delete require.cache[entryFilePath];
+          }
+        });
+      });
+    });
+  });
+
+  // start webpack dev server
+  devServer.listen(PORT, () => {
+    console.log('>>>>>>> ', `devServer start at ${PORT+1}`);
+  });
+} else {
+  // start the koa server
+  app.listen(PORT, () => {
+    console.log('>>>>>>> ', `http://localhost:${PORT}`);
+  });
+
+  pingme({
+    app,
+    status: f => f,
+    ping: f => f,
+  });
+}
