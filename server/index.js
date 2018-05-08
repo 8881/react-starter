@@ -36,20 +36,33 @@ if (process.env.NODE_ENV === 'development') {
       persistent: true
     });
     watcher.on('ready', () => {
-      console.log('>>>>>>>>>>>>>>', 'watcher ready');
+      console.log('>>>>>>> ', 'watcher ready');
 
       // start the koa server
       app.listen(PORT + 1, () => {
         console.log('>>>>>>> ', `http://localhost:${PORT+1}`);
       });
 
-      const entryFilePath = path.join(__dirname, 'server.js');
+      function deleteCache(nodeModulePath) {
+        try {
+          var nodeModule = require.cache[nodeModulePath]
+          var childrenCache = nodeModule && nodeModule.children || [];
+          childrenCache.forEach(function (childCache) {
+            deleteCache(childCache.id)
+            delete require.cache[childCache.id]
+          })
+          delete require.cache[nodeModulePath]
+        } catch (e) {
+          console.log('[Error]', e);
+        }
+      }
+
       const serverFile = Object.keys(require.cache).filter((id) => /[\/\\]server[\/\\]/.test(id));
       watcher.on('all', (event, path) => {
         serverFile.forEach(id => {
           if (path === id) {
-            delete require.cache[id];
-            delete require.cache[entryFilePath];
+            console.log('[clear] ', Date.now());
+            deleteCache(id);
           }
         });
       });

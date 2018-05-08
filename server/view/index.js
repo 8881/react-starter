@@ -19,9 +19,8 @@ const view = (ctx, next) => {
     ctx.body = 'opps.';
     return false;
   }
-
-  const html = 
-`<!doctype html>
+  let html = `
+<!doctype html>
   <html lang="zh-hans">
     <head>
       <meta charset="utf-8" />
@@ -32,10 +31,11 @@ const view = (ctx, next) => {
       <style></style>
     </head>
     <body>
-      <div id="${`哈哈哈`}">${markup}1233</div>
+      <div id="${`test1`}">${markup}1234567</div>
       <script>window.initialState = '';</script>
     </body>
-</html>`;
+</html>
+`;
 
   // ctx.body = html.replace(/\s{2,}/img, '');
   ctx.body = html.trim();
